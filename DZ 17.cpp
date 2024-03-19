@@ -1,28 +1,65 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
-class Vector
+
+
+class Ochki
 {
 public:
-	Vector()
+	//вывод имени
+	std::string name;
+	int score;
+
+	//класс в котором
+	Ochki(std::string a, int b) : name(a), score(b)
 	{}
-	Vector (double _x, double _y, double _z) : x(_x), y(_y), z(_z)
-	{}
-	void Show()
-	{
-		//Отображение результата:
-		std::cout << "модуль вектора = " << abs (sqrt((x * x) + (y * y) + (z * z))) << "\n";
-	}
-private:
-	double x = -8;
-	double y = 8;
-	double z = 4;
 };
+
+	bool Vse(const Ochki& a, const Ochki& b)
+	{
+		return a.score > b.score;
+	}
+
 
 int main()
 {
 	//возможность писать по русски
 	setlocale(LC_ALL, "Russian");
 
-	Vector v;
-	v.Show();
+	//переменная по количеству игроков 
+	int N;
+	std::cout << "Сколько игроков?" << "\n";
+	std::cin >> N;
+
+	//динамичный массив
+	std::vector <Ochki> players;
+
+	for (int i = 0; i < N; ++i)
+	{
+		//возможность внисения в переменную Имя
+		std::string name;
+		int score;
+		std::cout << "Имя:";
+		std::cin >> name;
+
+		//возможность внисения в переменную Очки
+		std::cout << "Сколько очков?:";
+		std::cin >> score;
+
+		//добавить элемент в массив
+		Ochki ochki(name, score);
+		players.push_back(ochki);
+	}
+
+	//сортировка
+	std::sort(players.begin(), players.end(), Vse);
+
+	std::cout << "Вывод:" << "\n";
+
+	for (const Ochki& ochki : players)
+	{
+		std::cout << "Имя: " << ochki.name << "\n";
+		std::cout << "Очки:" << ochki.score << "\n";
+	}
 }
